@@ -95,7 +95,7 @@ const Dropdown = ({
           'button-md inline-flex h-full items-center space-x-2 rounded-md border px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out hover:z-20 focus:z-20 focus:outline-none',
           buttonType === 'ghost'
             ? 'border-gray-600 bg-transparent hover:border-gray-200 focus:border-gray-100 active:border-gray-100'
-            : `focus:ring-blue border-red-500 bg-red-600/80 hover:border-red-500 hover:bg-red-600 active:border-red-700 active:bg-red-700`,
+            : `focus:ring-red border-red-500 bg-red-600/80 hover:border-red-500 hover:bg-red-600 active:border-red-700 active:bg-red-700`,
           className,
         ].join(' ')}
         ref={buttonRef}

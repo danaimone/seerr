@@ -322,7 +322,7 @@ const UserGeneralSettings = () => {
                       disabled={user?.plexUsername}
                       className={
                         user?.warnings.find((w) => w === 'userEmailRequired')
-                          ? 'border-2 border-red-400 focus:border-blue-600'
+                          ? 'border-2 border-red-400 focus:border-red-600'
                           : ''
                       }
                     />

@@ -1,5 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+/* eslint-disable @typescript-eslint/no-var-requires */
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -11,6 +12,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        gray: colors.neutral,
+      },
       transitionProperty: {
         'max-height': 'max-height',
         width: 'width',
