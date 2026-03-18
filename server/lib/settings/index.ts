@@ -306,6 +306,13 @@ export interface NotificationAgentGotify extends NotificationAgentConfig {
   };
 }
 
+export interface NotificationAgentBlueBubbles extends NotificationAgentConfig {
+  options: {
+    serverUrl: string;
+    password: string;
+  };
+}
+
 export interface NotificationAgentNtfy extends NotificationAgentConfig {
   options: {
     url: string;
@@ -330,6 +337,7 @@ export enum NotificationAgentKey {
   SLACK = 'slack',
   TELEGRAM = 'telegram',
   WEBHOOK = 'webhook',
+  BLUEBUBBLES = 'bluebubbles',
   WEBPUSH = 'webpush',
 }
 
@@ -344,6 +352,7 @@ interface NotificationAgents {
   telegram: NotificationAgentTelegram;
   webhook: NotificationAgentWebhook;
   webpush: NotificationAgentConfig;
+  bluebubbles: NotificationAgentBlueBubbles;
 }
 
 interface NotificationSettings {
@@ -562,6 +571,15 @@ class Settings {
               topic: '',
               priority: 3,
               locale: 'en',
+            },
+          },
+          bluebubbles: {
+            enabled: false,
+            embedPoster: false,
+            types: 0,
+            options: {
+              serverUrl: '',
+              password: '',
             },
           },
         },

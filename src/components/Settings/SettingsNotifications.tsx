@@ -10,7 +10,12 @@ import type { SettingsRoute } from '@app/components/Common/SettingsTabs';
 import SettingsTabs from '@app/components/Common/SettingsTabs';
 import globalMessages from '@app/i18n/globalMessages';
 import defineMessages from '@app/utils/defineMessages';
-import { BoltIcon, CloudIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
+import {
+  BoltIcon,
+  ChatBubbleBottomCenterTextIcon,
+  CloudIcon,
+  EnvelopeIcon,
+} from '@heroicons/react/24/solid';
 import { useIntl } from 'react-intl';
 
 const messages = defineMessages('components.Settings', {
@@ -129,6 +134,17 @@ const SettingsNotifications = ({ children }: SettingsNotificationsProps) => {
       ),
       route: '/settings/notifications/telegram',
       regex: /^\/settings\/notifications\/telegram/,
+    },
+    {
+      text: 'BlueBubbles',
+      content: (
+        <span className="flex items-center">
+          <ChatBubbleBottomCenterTextIcon className="mr-2 h-4" />
+          BlueBubbles
+        </span>
+      ),
+      route: '/settings/notifications/bluebubbles',
+      regex: /^\/settings\/notifications\/bluebubbles/,
     },
     {
       text: intl.formatMessage(messages.webhook),

@@ -1484,6 +1484,22 @@ components:
               type: string
             sendSilently:
               type: boolean
+    BlueBubblesSettings:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          example: false
+        types:
+          type: number
+          example: 2
+        options:
+          type: object
+          properties:
+            serverUrl:
+              type: string
+            password:
+              type: string
     PushbulletSettings:
       type: object
       properties:
@@ -1987,6 +2003,11 @@ components:
         telegramSendSilently:
           type: boolean
           nullable: true
+        blueBubblesEnabled:
+          type: boolean
+        blueBubblesPhoneNumber:
+          type: string
+          nullable: true
     NotificationAgentTypes:
       type: object
       properties:
@@ -2005,6 +2026,8 @@ components:
         webhook:
           type: number
         webpush:
+          type: number
+        bluebubbles:
           type: number
     WatchProviders:
       type: array
@@ -3667,6 +3690,52 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TelegramSettings'
+      responses:
+        '204':
+          description: Test notification attempted
+  /settings/notifications/bluebubbles:
+    get:
+      summary: Get BlueBubbles notification settings
+      description: Returns current BlueBubbles notification settings in a JSON object.
+      tags:
+        - settings
+      responses:
+        '200':
+          description: Returned BlueBubbles settings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueBubblesSettings'
+    post:
+      summary: Update BlueBubbles notification settings
+      description: Update BlueBubbles notification settings with the provided values.
+      tags:
+        - settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlueBubblesSettings'
+      responses:
+        '200':
+          description: 'Values were sucessfully updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlueBubblesSettings'
+  /settings/notifications/bluebubbles/test:
+    post:
+      summary: Test BlueBubbles settings
+      description: Sends a test notification to the BlueBubbles agent.
+      tags:
+        - settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlueBubblesSettings'
       responses:
         '204':
           description: Test notification attempted
