@@ -1,5 +1,4 @@
 import Badge from '@app/components/Common/Badge';
-import VersionStatus from '@app/components/Layout/VersionStatus';
 import useClickOutside from '@app/hooks/useClickOutside';
 import { Permission, useUser } from '@app/hooks/useUser';
 import defineMessages from '@app/utils/defineMessages';
@@ -232,11 +231,6 @@ const Sidebar = ({
                         );
                       })}
                     </nav>
-                    {hasPermission(Permission.ADMIN) && (
-                      <div className="px-2">
-                        <VersionStatus onClick={() => setClosed()} />
-                      </div>
-                    )}
                   </div>
                 </div>
                 <div className="w-14 flex-shrink-0">
@@ -253,7 +247,7 @@ const Sidebar = ({
           <div className="flex h-0 flex-1 flex-col">
             <div className="flex flex-1 flex-col overflow-y-auto pb-4">
               <div className="flex flex-shrink-0 items-center">
-                <span className="w-full px-4 py-2 text-2xl text-gray-50">
+                <span className="w-full px-4 pb-2 pt-4 text-2xl text-gray-50">
                   <Link href="/" className="relative block h-14">
                     <Image
                       src="/logo_full.svg"
@@ -322,11 +316,6 @@ const Sidebar = ({
                   );
                 })}
               </nav>
-              {hasPermission(Permission.ADMIN) && (
-                <div className="px-2">
-                  <VersionStatus />
-                </div>
-              )}
             </div>
           </div>
         </div>

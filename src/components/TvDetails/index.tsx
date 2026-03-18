@@ -490,7 +490,7 @@ const TvDetails = ({ tv }: TvDetailsProps) => {
             className="absolute inset-0"
             style={{
               backgroundImage:
-                'linear-gradient(180deg, rgba(17, 24, 39, 0.47) 0%, rgba(17, 24, 39, 1) 100%)',
+                'linear-gradient(180deg, rgba(23, 23, 23, 0.47) 0%, rgba(23, 23, 23, 1) 100%)',
             }}
           />
         </div>
