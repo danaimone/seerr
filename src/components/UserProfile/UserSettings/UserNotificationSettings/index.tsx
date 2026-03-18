@@ -10,7 +10,11 @@ import { useUser } from '@app/hooks/useUser';
 import globalMessages from '@app/i18n/globalMessages';
 import Error from '@app/pages/_error';
 import defineMessages from '@app/utils/defineMessages';
-import { CloudIcon, EnvelopeIcon } from '@heroicons/react/24/solid';
+import {
+  ChatBubbleBottomCenterTextIcon,
+  CloudIcon,
+  EnvelopeIcon,
+} from '@heroicons/react/24/solid';
 import type { UserSettingsNotificationsResponse } from '@server/interfaces/api/userSettingsInterfaces';
 import { useRouter } from 'next/router';
 import { useIntl } from 'react-intl';
@@ -110,6 +114,18 @@ const UserNotificationSettings = ({
       route: '/settings/notifications/telegram',
       regex: /\/settings\/notifications\/telegram/,
       hidden: !data?.telegramEnabled || !data?.telegramBotUsername,
+    },
+    {
+      text: 'BlueBubbles',
+      content: (
+        <span className="flex items-center">
+          <ChatBubbleBottomCenterTextIcon className="mr-2 h-4" />
+          BlueBubbles
+        </span>
+      ),
+      route: '/settings/notifications/bluebubbles',
+      regex: /\/settings\/notifications\/bluebubbles/,
+      hidden: !data?.blueBubblesEnabled,
     },
   ];
 

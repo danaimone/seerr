@@ -554,6 +554,8 @@ userSettingsRoutes.get<{ id: string }, UserSettingsNotificationsResponse>(
         telegramMessageThreadId: user.settings?.telegramMessageThreadId,
         telegramSendSilently: user.settings?.telegramSendSilently,
         webPushEnabled: settings.webpush.enabled,
+        blueBubblesEnabled: settings.bluebubbles.enabled,
+        blueBubblesPhoneNumber: user.settings?.blueBubblesPhoneNumber,
         notificationTypes: user.settings?.notificationTypes ?? {},
       });
     } catch (e) {
@@ -596,6 +598,7 @@ userSettingsRoutes.post<{ id: string }, UserSettingsNotificationsResponse>(
           telegramChatId: req.body.telegramChatId,
           telegramMessageThreadId: req.body.telegramMessageThreadId,
           telegramSendSilently: req.body.telegramSendSilently,
+          blueBubblesPhoneNumber: req.body.blueBubblesPhoneNumber,
           notificationTypes: req.body.notificationTypes,
         });
       } else {
@@ -610,6 +613,7 @@ userSettingsRoutes.post<{ id: string }, UserSettingsNotificationsResponse>(
         user.settings.telegramMessageThreadId =
           req.body.telegramMessageThreadId;
         user.settings.telegramSendSilently = req.body.telegramSendSilently;
+        user.settings.blueBubblesPhoneNumber = req.body.blueBubblesPhoneNumber;
         user.settings.notificationTypes = Object.assign(
           {},
           user.settings.notificationTypes,
@@ -629,6 +633,7 @@ userSettingsRoutes.post<{ id: string }, UserSettingsNotificationsResponse>(
         telegramChatId: user.settings.telegramChatId,
         telegramMessageThreadId: user.settings.telegramMessageThreadId,
         telegramSendSilently: user.settings.telegramSendSilently,
+        blueBubblesPhoneNumber: user.settings.blueBubblesPhoneNumber,
         notificationTypes: user.settings.notificationTypes,
       });
     } catch (e) {

@@ -64,6 +64,9 @@ export class UserSettings {
   public telegramMessageThreadId?: string;
 
   @Column({ nullable: true })
+  public blueBubblesPhoneNumber?: string;
+
+  @Column({ nullable: true })
   public telegramSendSilently?: boolean;
 
   @Column({ nullable: true })
@@ -86,6 +89,7 @@ export class UserSettings {
           telegram: 0,
           webhook: 0,
           webpush: ALL_NOTIFICATIONS,
+          bluebubbles: 0,
         };
         if (!value) {
           return defaultTypes;

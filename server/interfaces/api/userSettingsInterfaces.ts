@@ -37,5 +37,7 @@ export interface UserSettingsNotificationsResponse {
   telegramMessageThreadId?: string;
   telegramSendSilently?: boolean;
   webPushEnabled?: boolean;
+  blueBubblesEnabled?: boolean;
+  blueBubblesPhoneNumber?: string;
   notificationTypes: Partial<NotificationAgentTypes>;
 }
