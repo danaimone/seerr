@@ -192,7 +192,7 @@ const Sidebar = ({
                     <div className="flex flex-shrink-0 items-center px-2">
                       <span className="w-full px-4 text-xl text-gray-50">
                         <Link href="/" className="relative block h-24 w-64">
-                          <Image src="/logo_full.svg" alt="Logo" fill />
+                          <Image src="/logo_full.png" alt="Logo" fill />
                         </Link>
                       </span>
                     </div>
@@ -219,7 +219,7 @@ const Sidebar = ({
                             tabIndex={0}
                             className={`flex items-center rounded-md px-2 py-2 text-base font-medium leading-6 text-white transition duration-150 ease-in-out focus:outline-none ${
                               router.pathname.match(sidebarLink.activeRegExp)
-                                ? 'bg-gradient-to-br from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500'
+                                ? 'bg-gradient-to-br from-red-600 to-red-600 hover:from-red-500 hover:to-red-500'
                                 : 'hover:bg-gray-700 focus:bg-gray-700'
                             } `}
                             data-testid={`${sidebarLink.dataTestId}-mobile`}
@@ -255,8 +255,8 @@ const Sidebar = ({
               <div className="flex flex-shrink-0 items-center">
                 <span className="w-full px-4 py-2 text-2xl text-gray-50">
                   <Link href="/" className="relative block h-24">
-                    <Image
-                      src="/logo_full.svg"
+<Image
+                      src="/logo_full.png"
                       alt="Logo"
                       fill
                       loading="eager"
@@ -279,7 +279,7 @@ const Sidebar = ({
                       as={sidebarLink.as}
                       className={`group flex items-center rounded-md px-2 py-2 text-lg font-medium leading-6 text-white transition duration-150 ease-in-out focus:outline-none ${
                         router.pathname.match(sidebarLink.activeRegExp)
-                          ? 'bg-gradient-to-br from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500'
+                          ? 'bg-gradient-to-br from-red-600 to-red-600 hover:from-red-500 hover:to-red-500'
                           : 'hover:bg-gray-700 focus:bg-gray-700'
                       } `}
                       data-testid={sidebarLink.dataTestId}
@@ -295,8 +295,8 @@ const Sidebar = ({
                             <Badge
                               className={`rounded-md bg-gradient-to-br ${
                                 router.pathname.match(sidebarLink.activeRegExp)
-                                  ? 'border-indigo-600 from-indigo-700 to-purple-700'
-                                  : 'border-indigo-500 from-indigo-600 to-purple-600'
+                                  ? 'border-red-600 from-red-700 to-red-700'
+                                  : 'border-red-500 from-red-600 to-red-600'
                               }`}
                             >
                               {pendingRequestsCount}
@@ -310,8 +310,8 @@ const Sidebar = ({
                             <Badge
                               className={`rounded-md bg-gradient-to-br ${
                                 router.pathname.match(sidebarLink.activeRegExp)
-                                  ? 'border-indigo-600 from-indigo-700 to-purple-700'
-                                  : 'border-indigo-500 from-indigo-600 to-purple-600'
+                                  ? 'border-red-600 from-red-700 to-red-700'
+                                  : 'border-red-500 from-red-600 to-red-600'
                               }`}
                             >
                               {openIssuesCount}

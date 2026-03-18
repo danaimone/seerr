@@ -150,7 +150,7 @@ const UserDropdown = () => {
                     href={`/profile`}
                     className={`flex items-center rounded px-4 py-2 text-sm font-medium text-gray-200 transition duration-150 ease-in-out ${
                       active
-                        ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white'
+                        ? 'bg-gradient-to-br from-red-600 to-red-600 text-white'
                         : ''
                     }`}
                     data-testid="user-menu-profile"
@@ -173,7 +173,7 @@ const UserDropdown = () => {
                     }
                     className={`flex items-center rounded px-4 py-2 text-sm font-medium text-gray-200 transition duration-150 ease-in-out ${
                       active
-                        ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white'
+                        ? 'bg-gradient-to-br from-red-600 to-red-600 text-white'
                         : ''
                     }`}
                     data-testid="user-menu-settings"
@@ -189,7 +189,7 @@ const UserDropdown = () => {
                     href={`/profile/settings`}
                     className={`flex items-center rounded px-4 py-2 text-sm font-medium text-gray-200 transition duration-150 ease-in-out ${
                       active
-                        ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white'
+                        ? 'bg-gradient-to-br from-red-600 to-red-600 text-white'
                         : ''
                     }`}
                     data-testid="user-menu-settings"
@@ -205,7 +205,7 @@ const UserDropdown = () => {
                     href="#"
                     className={`flex items-center rounded px-4 py-2 text-sm font-medium text-gray-200 transition duration-150 ease-in-out ${
                       active
-                        ? 'bg-gradient-to-br from-indigo-600 to-purple-600 text-white'
+                        ? 'bg-gradient-to-br from-red-600 to-red-600 text-white'
                         : ''
                     }`}
                     onClick={() => logout()}
