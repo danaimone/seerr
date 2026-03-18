@@ -2,6 +2,7 @@ import type { User } from '@server/entity/User';
 import { defineMessages, getIntl } from '@server/i18n';
 import { Notification } from '@server/lib/notifications';
 import type { NotificationAgent } from '@server/lib/notifications/agents/agent';
+import BlueBubblesAgent from '@server/lib/notifications/agents/bluebubbles';
 import DiscordAgent from '@server/lib/notifications/agents/discord';
 import EmailAgent from '@server/lib/notifications/agents/email';
 import GotifyAgent from '@server/lib/notifications/agents/gotify';
@@ -428,6 +429,40 @@ notificationRoutes.post('/ntfy/test', async (req, res, next) => {
     return next({
       status: 500,
       message: 'Failed to send ntfy notification.',
+    });
+  }
+});
+
+notificationRoutes.get('/bluebubbles', (_req, res) => {
+  const settings = getSettings();
+
+  res.status(200).json(settings.notifications.agents.bluebubbles);
+});
+
+notificationRoutes.post('/bluebubbles', async (req, res) => {
+  const settings = getSettings();
+
+  settings.notifications.agents.bluebubbles = req.body;
+  await settings.save();
+
+  res.status(200).json(settings.notifications.agents.bluebubbles);
+});
+
+notificationRoutes.post('/bluebubbles/test', async (req, res, next) => {
+  if (!req.user) {
+    return next({
+      status: 500,
+      message: 'User information is missing from the request.',
+    });
+  }
+
+  const blueBubblesAgent = new BlueBubblesAgent(req.body);
+  if (await sendTestNotification(blueBubblesAgent, req.user)) {
+    return res.status(204).send();
+  } else {
+    return next({
+      status: 500,
+      message: 'Failed to send BlueBubbles notification.',
     });
   }
 });
