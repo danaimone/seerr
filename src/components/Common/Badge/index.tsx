@@ -65,11 +65,9 @@ const Badge = (
       }
       break;
     default:
-      badgeStyle.push(
-        'bg-indigo-500/80 border border-indigo-500 !text-indigo-100'
-      );
+      badgeStyle.push('bg-red-500/80 border border-red-500 !text-red-100');
       if (href) {
-        badgeStyle.push('hover:bg-indigo-500');
+        badgeStyle.push('hover:bg-red-500');
       }
   }
 

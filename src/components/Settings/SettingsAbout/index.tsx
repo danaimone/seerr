@@ -57,6 +57,28 @@ const SettingsAbout = () => {
           intl.formatMessage(globalMessages.settings),
         ]}
       />
+      <div className="mt-6 rounded-md border border-red-500 bg-red-400/20 p-4 backdrop-blur">
+        <div className="flex">
+          <div className="flex-shrink-0">
+            <InformationCircleIcon className="h-5 w-5 text-gray-100" />
+          </div>
+          <div className="ml-3 flex-1 md:flex md:justify-between">
+            <p className="text-sm leading-5 text-gray-100">
+              {intl.formatMessage(messages.betawarning)}
+            </p>
+            <p className="mt-3 text-sm leading-5 md:ml-6 md:mt-0">
+              <a
+                href="http://github.com/seerr-team/seerr"
+                className="whitespace-nowrap font-medium text-gray-100 transition duration-150 ease-in-out hover:text-white"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub &rarr;
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="section">
         <List title={intl.formatMessage(messages.aboutseerr)}>
           {data.version.startsWith('develop-') && (
@@ -135,7 +157,7 @@ const SettingsAbout = () => {
               href="https://docs.seerr.dev"
               target="_blank"
               rel="noreferrer"
-              className="text-indigo-500 transition duration-300 hover:underline"
+              className="text-red-500 transition duration-300 hover:underline"
             >
               https://docs.seerr.dev
             </a>
@@ -145,7 +167,7 @@ const SettingsAbout = () => {
               href="https://github.com/seerr-team/seerr/discussions"
               target="_blank"
               rel="noreferrer"
-              className="text-indigo-500 transition duration-300 hover:underline"
+              className="text-red-500 transition duration-300 hover:underline"
             >
               https://github.com/seerr-team/seerr/discussions
             </a>
@@ -155,7 +177,7 @@ const SettingsAbout = () => {
               href="https://discord.gg/seerr"
               target="_blank"
               rel="noreferrer"
-              className="text-indigo-500 transition duration-300 hover:underline"
+              className="text-red-500 transition duration-300 hover:underline"
             >
               https://discord.gg/seerr
             </a>
@@ -169,7 +191,7 @@ const SettingsAbout = () => {
               href="https://opencollective.com/seerr"
               target="_blank"
               rel="noreferrer"
-              className="text-indigo-500 transition duration-300 hover:underline"
+              className="text-red-500 transition duration-300 hover:underline"
             >
               https://opencollective.com/seerr
             </a>
