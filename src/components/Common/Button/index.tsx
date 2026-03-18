@@ -77,7 +77,7 @@ function Button<P extends ElementTypes = 'button'>(
       break;
     default:
       buttonStyle.push(
-        'text-gray-200 bg-gray-800/80 border-gray-600 hover:text-white hover:bg-gray-700 hover:border-gray-600 group-hover:text-white group-hover:bg-gray-700 group-hover:border-gray-600 focus:border-blue-300 focus:ring-blue active:text-gray-200 active:bg-gray-700 active:border-gray-600'
+        'text-gray-200 bg-gray-800/80 border-gray-600 hover:text-white hover:bg-gray-700 hover:border-gray-600 group-hover:text-white group-hover:bg-gray-700 group-hover:border-gray-600 focus:border-red-300 focus:ring-red active:text-gray-200 active:bg-gray-700 active:border-gray-600'
       );
   }
 
