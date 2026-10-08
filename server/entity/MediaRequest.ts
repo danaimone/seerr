@@ -227,11 +227,18 @@ export class MediaRequest {
       .getMany();
 
     if (existing && existing.length > 0) {
-      // If there is an existing movie request that isn't declined, don't allow a new one.
+      const statusKey = requestBody.is4k ? 'status4k' : 'status';
+
+      // If there is an existing movie request that isn't declined or completed, don't allow a new one.
+      // Requests left behind by media that has since been deleted don't count.
       if (
         requestBody.mediaType === MediaType.MOVIE &&
-        existing[0].status !== MediaRequestStatus.DECLINED &&
-        existing[0].status !== MediaRequestStatus.COMPLETED
+        existing.some(
+          (r) =>
+            r.status !== MediaRequestStatus.DECLINED &&
+            r.status !== MediaRequestStatus.COMPLETED &&
+            r.media?.[statusKey] !== MediaStatus.DELETED
+        )
       ) {
         logger.warn('Duplicate request for media blocked', {
           tmdbId: tmdbMedia.id,
@@ -247,7 +254,6 @@ export class MediaRequest {
 
       // If an existing auto-request for this media exists from the same user,
       // don't allow a new one.
-      const statusKey = requestBody.is4k ? 'status4k' : 'status';
       if (
         existing.find(
           (r) =>
@@ -374,7 +380,14 @@ export class MediaRequest {
       // We need to check existing requests on this title to make sure we don't double up on seasons that were
       // already requested. In the case they were, we just throw out any duplicates but still approve the request.
       // (Unless there are no seasons, in which case we abort)
+      // A season only counts if its own part of the request is still open and it hasn't since been
+      // deleted: a partially fulfilled request stays approved after its seasons are deleted.
       if (media.requests) {
+        const seasonStatusKey = requestBody.is4k ? 'status4k' : 'status';
+        const deletedSeasons = (media.seasons ?? [])
+          .filter((season) => season[seasonStatusKey] === MediaStatus.DELETED)
+          .map((season) => season.seasonNumber);
+
         existingSeasons = media.requests
           .filter(
             (request) =>
@@ -383,9 +396,14 @@ export class MediaRequest {
               request.status !== MediaRequestStatus.COMPLETED
           )
           .reduce((seasons, request) => {
-            const combinedSeasons = request.seasons.map(
-              (season) => season.seasonNumber
-            );
+            const combinedSeasons = request.seasons
+              .filter(
+                (season) =>
+                  season.status !== MediaRequestStatus.DECLINED &&
+                  season.status !== MediaRequestStatus.COMPLETED &&
+                  !deletedSeasons.includes(season.seasonNumber)
+              )
+              .map((season) => season.seasonNumber);
 
             return [...seasons, ...combinedSeasons];
           }, [] as number[]);
