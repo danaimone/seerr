@@ -245,6 +245,14 @@ const TvRequestModal = ({
     return allSeasons.map((season) => season.seasonNumber);
   };
 
+  // Seasons deleted since they were requested can be requested again
+  const isDeletedSeason = (seasonNumber: number): boolean =>
+    (data?.mediaInfo?.seasons ?? []).some(
+      (season) =>
+        season.seasonNumber === seasonNumber &&
+        season[is4k ? 'status4k' : 'status'] === MediaStatus.DELETED
+    );
+
   const getAllRequestedSeasons = (): number[] => {
     const requestedSeasons = (data?.mediaInfo?.requests ?? [])
       .filter(
@@ -257,7 +265,13 @@ const TvRequestModal = ({
         return [
           ...requestedSeasons,
           ...request.seasons
-            .filter((season) => !editingSeasons.includes(season.seasonNumber))
+            .filter(
+              (season) =>
+                !editingSeasons.includes(season.seasonNumber) &&
+                season.status !== MediaRequestStatus.DECLINED &&
+                season.status !== MediaRequestStatus.COMPLETED &&
+                !isDeletedSeason(season.seasonNumber)
+            )
             .map((sr) => sr.seasonNumber),
         ];
       }, [] as number[]);
@@ -365,7 +379,8 @@ const TvRequestModal = ({
             seasonRequest = request.seasons.find(
               (season) =>
                 season.seasonNumber === seasonNumber &&
-                season.status !== MediaRequestStatus.COMPLETED
+                season.status !== MediaRequestStatus.COMPLETED &&
+                !isDeletedSeason(seasonNumber)
             );
           }
         });

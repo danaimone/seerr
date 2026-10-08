@@ -1628,3 +1628,107 @@ describe('DELETE /request/:requestId, orphaned season status reset', () => {
     assert.strictEqual(updated.seasons[0].status4k, MediaStatus.PROCESSING);
   });
 });
+
+describe('POST /request, media deleted after an earlier request', () => {
+  async function seedApprovedRequest(
+    mediaType: MediaType,
+    tmdbId: number,
+    mediaFields: Partial<Media>,
+    seasonStatuses: [number, MediaRequestStatus][] = []
+  ): Promise<void> {
+    const admin = await getRepository(User).findOneOrFail({
+      where: { email: 'admin@seerr.dev' },
+    });
+    const media = await getRepository(Media).save(
+      new Media({
+        mediaType,
+        tmdbId,
+        status4k: MediaStatus.UNKNOWN,
+        ...mediaFields,
+      })
+    );
+
+    await getRepository(MediaRequest).save(
+      new MediaRequest({
+        type: mediaType,
+        status: MediaRequestStatus.APPROVED,
+        media,
+        requestedBy: admin,
+        is4k: false,
+        seasons: seasonStatuses.map(
+          ([seasonNumber, status]) =>
+            new SeasonRequest({ seasonNumber, status })
+        ),
+      })
+    );
+  }
+
+  it('allows re-requesting a deleted movie whose request was left approved', async () => {
+    await seedApprovedRequest(MediaType.MOVIE, 99201, {
+      status: MediaStatus.DELETED,
+    });
+
+    const friend = await loginAs('demo@seerr.dev', 'test1234');
+    const res = await friend.post('/request').send({
+      mediaType: MediaType.MOVIE,
+      mediaId: 99201,
+    });
+
+    assert.strictEqual(res.status, 201);
+  });
+
+  it('still blocks a movie whose approved request is in progress', async () => {
+    await seedApprovedRequest(MediaType.MOVIE, 99202, {
+      status: MediaStatus.PROCESSING,
+    });
+
+    const friend = await loginAs('demo@seerr.dev', 'test1234');
+    const res = await friend.post('/request').send({
+      mediaType: MediaType.MOVIE,
+      mediaId: 99202,
+    });
+
+    assert.strictEqual(res.status, 409);
+  });
+
+  it('allows re-requesting deleted seasons of a partially fulfilled request', async () => {
+    await seedApprovedRequest(
+      MediaType.TV,
+      99203,
+      {
+        status: MediaStatus.DELETED,
+        seasons: [
+          new Season({
+            seasonNumber: 1,
+            status: MediaStatus.DELETED,
+            status4k: MediaStatus.UNKNOWN,
+          }),
+          new Season({
+            seasonNumber: 2,
+            status: MediaStatus.UNKNOWN,
+            status4k: MediaStatus.UNKNOWN,
+          }),
+        ],
+      },
+      [
+        [1, MediaRequestStatus.COMPLETED],
+        [2, MediaRequestStatus.APPROVED],
+      ]
+    );
+
+    const friend = await loginAs('demo@seerr.dev', 'test1234');
+    const deletedSeason = await friend.post('/request').send({
+      mediaType: MediaType.TV,
+      mediaId: 99203,
+      seasons: [1],
+    });
+    assert.strictEqual(deletedSeason.status, 201);
+
+    const openSeason = await friend.post('/request').send({
+      mediaType: MediaType.TV,
+      mediaId: 99203,
+      seasons: [2],
+    });
+    assert.strictEqual(openSeason.status, 202);
+  });
+});
